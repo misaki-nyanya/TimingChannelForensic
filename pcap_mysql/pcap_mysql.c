@@ -1,5 +1,5 @@
 /**
- *	AUTHER: RILLKE ZHOU
+ *	AUTHOR: RILLKE ZHOU
  *	CREATE: 2016.03.07
  *	ACKNOWLEDGEMENT:
  *		Thanks to Tim Carstens, who wrote http://www.tcpdump.org/pcap.html.
