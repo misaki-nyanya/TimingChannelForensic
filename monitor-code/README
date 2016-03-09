@@ -1,0 +1,21 @@
+##项目依赖（Ubuntu环境为例）
+-libvmi安装
+http://libvmi.com/docs/gcode-install.html
+
+-mysql安装
+- sudo apt-get install mysql-server
+- sudo apt-get install mysql-client
+- sudo apt-get install libmysqlclient-dev
+- 通过命令sudo netstat -tap | grep mysql查看是否安装成功
+- 编译使用gcc mysql.c -o mysql -lmysqlclient -I/usr/include/mysql命令
+
+##函数接口
+- MYSQL init_db();
+- int disconnect(MYSQL* mysql);
+- int insert_sendInfoTable(MYSQL* mysql,char* srcip,char* desip,int srcport,int desport,char* sendtime,int packetlength);
+- int insert_receiveInfoTable(MYSQL* mysql,char* srcip,char* desip,int srcport,int desport,char* arrivetime,int packetlength);
+- int insert_memMonitorInfoTable(MYSQL* mysql,int pid,char* crs,char* procname,int time,int page,int access,char* gfn,char* gfn_offset);
+- int check_table_sendInfoTable(MYSQL* mysql,char* name);
+- int check_table_receiveInfoTable(MYSQL* mysql,char* name);
+- int check_table_memMonitorInfoTable(MYSQL* mysql,char* name);
+- int check_db(MYSQL* mysql,char* db_name);
