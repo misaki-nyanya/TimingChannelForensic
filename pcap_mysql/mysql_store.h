@@ -137,7 +137,7 @@ int check_table_sendInfoTable(MYSQL* mysql,char* name)
     {  
         char buf[256]={0};  
         char qbuf[256]={0};  
-        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,srcip VARCHAR(20),desip VARCHAR(20),srcport int(5),desport int(5),sendtime VARCHAR(20),packetlength int(5));",TABLE_NAME_SEND);  
+        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,srcip VARCHAR(20),desip VARCHAR(20),srcport int(10),desport int(10),sendtime VARCHAR(20),packetlength int(10));",TABLE_NAME_SEND);  
         strcpy(qbuf,"CREATE TABLE ");  
         strcat(qbuf,buf);  
 //#ifdef DEBUG  
@@ -175,7 +175,7 @@ int check_table_receiveInfoTable(MYSQL* mysql,char* name)
     {  
         char buf[256]={0};  
         char qbuf[256]={0};  
-        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,srcip VARCHAR(20),desip VARCHAR(20),srcport int(5),desport int(5),arrivetime VARCHAR(20),packetlength int(5));",TABLE_NAME_RECEIVE);  
+        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,srcip VARCHAR(20),desip VARCHAR(20),srcport int(10),desport int(10),arrivetime VARCHAR(20),packetlength int(10));",TABLE_NAME_RECEIVE);  
         strcpy(qbuf,"CREATE TABLE ");  
         strcat(qbuf,buf);  
 //#ifdef DEBUG  
@@ -213,7 +213,7 @@ int check_table_memMonitorInfoTable(MYSQL* mysql,char* name)
     {  
         char buf[256]={0};  
         char qbuf[256]={0};  
-        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,pid int(10),cr3 VARCHAR(20),procname VARCHAR(20),time int(11),page int(10),access int(5),gfn VARCHAR(20),gfn_offset VARCHAR(20),gla VARCHAR(20),vcpuid VARCHAR(20));",TABLE_NAME_MEM_MONITOR);  
+        snprintf(buf,sizeof(buf),"%s (id int(11) AUTO_INCREMENT primary key,pid int(10),cr3 VARCHAR(20),procname VARCHAR(20),time int(11),page int(10),access int(10),gfn VARCHAR(20),gfn_offset VARCHAR(20),gla VARCHAR(20),vcpuid VARCHAR(20));",TABLE_NAME_MEM_MONITOR);  
         strcpy(qbuf,"CREATE TABLE ");  
         strcat(qbuf,buf);  
 //#ifdef DEBUG  
@@ -269,7 +269,7 @@ static size_t strcat2(char **dst_out, ...)
 int insert_sendInfoTable(MYSQL* mysql,char* srcip,char* desip,int srcport,int desport,char* sendtime,int packetlength){
     int res = 0;
     size_t len;
-    sprintf(sql_str_," values('%s','%s',%d,%d,'%s',%d)",
+    sprintf(sql_str_," values('%s','%s',%hu,%hu,'%s',%d)",
                                srcip,desip,srcport,desport,sendtime,packetlength); 
     len = strcat2(&sql,ins_send,sql_str_,NULL);   
 //    fwrite(sql,len,1,stdout);
@@ -284,7 +284,7 @@ int insert_sendInfoTable(MYSQL* mysql,char* srcip,char* desip,int srcport,int de
 int insert_receiveInfoTable(MYSQL* mysql,char* srcip,char* desip,int srcport,int desport,char* arrivetime,int packetlength){
     int res = 0;
     size_t len;
-    sprintf(sql_str_," values('%s','%s',%d,%d,'%s',%d)",
+    sprintf(sql_str_," values('%s','%s',%hu,%hu,'%s',%d)",
                                srcip,desip,srcport,desport,arrivetime,packetlength);  
     len = strcat2(&sql,ins_receive,sql_str_,NULL);   
 //    fwrite(sql,len,1,stdout);
