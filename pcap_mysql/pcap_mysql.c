@@ -103,41 +103,41 @@ struct sniff_tcp {
  */
 
 //pcap
-char*							filter_exp;	/* The filter expression */
+char*						filter_exp;	/* The filter expression */
 struct bpf_program 				fp;		/* The compiled filter expression */
 bpf_u_int32 					mask;		/* The netmask of our sniffing device */
 bpf_u_int32 					net;		/* The IP of our sniffing device */
-char*							dev;
-char							errbuf[PCAP_ERRBUF_SIZE];
-pcap_t*							handle = NULL;
+char*						dev;
+char						errbuf[PCAP_ERRBUF_SIZE];
+pcap_t*						handle = NULL;
 
 //package
-const struct sniff_ethernet*	ethernet; /* The ethernet header */
-const struct sniff_ip*			ip; /* The IP header */
-const struct sniff_tcp*			tcp; /* The TCP header */
-u_int 							size_ip;
-u_int 							size_tcp;
+const struct sniff_ethernet*			ethernet; /* The ethernet header */
+const struct sniff_ip*				ip; /* The IP header */
+const struct sniff_tcp*				tcp; /* The TCP header */
+u_int 						size_ip;
+u_int 						size_tcp;
 
 #ifdef PKG_LOG
 //logfile
-FILE* 							pkglog = NULL;
+FILE* 						pkglog = NULL;
 #endif
 
 //mysql
-int								err;
-MYSQL							mysql;
+int						err;
+MYSQL						mysql;
 
 //default little endian
-int								little_endian = 1;
+int						little_endian = 1;
 
 //packet handler
-const struct in_addr*			src_addr;
-const struct in_addr*			dst_addr;
-char 							src_port[2] = {0x00,0x00};
-char 							dst_port[2] = {0x00,0x00};
-char*							p;
-char 							time_print[13];
-
+const struct in_addr*				src_addr;
+const struct in_addr*				dst_addr;
+char 						src_port[2] = {0x00,0x00};
+char 						dst_port[2] = {0x00,0x00};
+char*						p;
+char 						time_print[13];
+double 						temp;
 
 void recycle_all(){
 	printf("recycling resources...\n");
@@ -226,9 +226,8 @@ void got_packet(u_char *args, const struct pcap_pkthdr *header, const u_char *pa
 	 *  This piece of code is prone to bug.
 	 *  We use this to simplify our data.
 	 */
-	sprintf(time_print,"%ld",(header->ts.tv_sec-1457000000));
-	sprintf(time_print+6,".");
-	sprintf(time_print+7,"%ld",(header->ts.tv_usec));
+	temp = (header->ts.tv_usec)*0.000001+(header->ts.tv_sec-1457000000);
+	sprintf(time_print,"%6.6f",temp);
 	
 	insert_sendInfoTable(&mysql,
 						print_src_addr,
